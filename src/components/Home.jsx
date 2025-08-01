@@ -156,8 +156,13 @@ const Home = () => {
         <h1 className='text-orange-600 my-3 text-5xl'>LearnExpress</h1>
         <h5 className='text-sm opacity-60 text-white'>Sharpen your skill with courses crafted by experts</h5>
         <div className='flex my-2 gap-5'>
-            <button className='px-5 py-1 text-2xl text-white rounded bg-green-500 hover:bg-white hover:text-black'>Explore Course</button>
-            <button className='px-5 py-1 text-2xl rounded bg-white text-black hover:bg-green-500 hover:text-white '>Courses Videos</button>
+          {/* {
+            isLogged? (<Link to={'/courses'} className='px-5 py-1 text-2xl text-white rounded bg-green-500 hover:bg-white hover:text-black'>Explore Course</Link>
+            ):(navigate('/login'))
+          } */}
+          <Link to={'/courses'} className='px-5 py-1 text-2xl text-white rounded bg-green-500 hover:bg-white hover:text-black'>Explore Course</Link>
+           
+*         <button className='px-5 py-1 text-2xl rounded bg-white text-black hover:bg-green-500 hover:text-white '>Courses Videos</button>
         </div>
 
 
