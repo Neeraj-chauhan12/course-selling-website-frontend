@@ -1,17 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../../public/profile.jpg'
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 
 const Login = () => {
 
+  const [errorResponse,setErrorResponse]=useState("");
+
     const {
     register,
+    handleSubmit,
     formState: { errors },
   } = useForm();
 
- function handleSubmit(data){
+  const navigate=useNavigate();
+
+ async function onsubmit(data){
   console.log(data)
 
   const userLogin={
@@ -20,6 +27,30 @@ const Login = () => {
     password:data.password
 
   }
+
+  try {
+      
+     const response= await axios.post("http://localhost:3000/user/login",userLogin,
+      {
+        withCredentials:true,
+
+      }
+     )
+     console.log(response.data)
+     toast.success("login successfull")
+     localStorage.setItem("user",JSON.stringify(response.data));
+     navigate('/')
+     
+      
+    } catch (error) {
+      if(error.response){
+      setErrorResponse(error.response.data.error)
+      console.log("error in signup page",error)
+      }
+      
+      
+    }
+    
  }
    
   return (
@@ -46,7 +77,7 @@ const Login = () => {
         
         <form 
         className='w-96 py-10 mt-14 rounded bg-gray-900 px-5 '
-        onSubmit={handleSubmit()}>
+        onSubmit={handleSubmit(onsubmit)}>
            
            <div className='flex justify-center text-white mb-8 items-center flex-col'>
                 <h1 className='text-3xl '>Welcome to <span className='text-orange-600'>LearnXpress</span></h1>
@@ -56,7 +87,7 @@ const Login = () => {
             <h1 className='text-white text-2xl mb-2'>Email</h1>
             <input
             
-                className='w-full mb-5 text-2xl text-white border-2 border-gray-600 rounded '
+                className='w-full mb-5 text-2xl text-white border-2 focus:outline-none focus:ring-2 focus:ring-green-500 border-gray-600 rounded '
                placeholder='Enter the email..' 
                type="email"
                {...register('email')}
@@ -65,13 +96,21 @@ const Login = () => {
                <h1 className='text-2xl mb-2 text-white'>Password</h1>
                 <input 
                 
-                 className='w-full mb-5 text-2xl text-white border-2 border-gray-600 rounded '
+                 className='w-full mb-5 text-2xl text-white border-2 border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 rounded '
                 placeholder='Enter the password..'
                 type='password' 
                 {...register('password')}
                 />
 
-                <button className='bg-orange-600 rounded w-full py-3 flex justify-center items-center' >submit now</button>
+                {errorResponse &&(
+                  <h1 className='text-sm text-red-500 text-center'>
+                    {
+                      errorResponse
+                    }
+                  </h1>)
+                }
+
+                <button className='bg-orange-600 rounded mt-4 w-full py-3 flex justify-center items-center' >submit now</button>
 
         </form>
              

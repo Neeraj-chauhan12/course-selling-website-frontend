@@ -8,11 +8,26 @@ import axios, { Axios }  from 'axios'
 import Slider from "react-slick";
  import "slick-carousel/slick/slick.css";
  import "slick-carousel/slick/slick-theme.css";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Home = () => {
 
   const [courses,setCourses]=useState([])
+  const [isLogged,setIsLogged]=useState(false);
+
+  const navigate=useNavigate()
+
+  useEffect(()=>{
+    const token=localStorage.getItem("user")
+
+    if(token){
+      setIsLogged(true)
+    }
+    else{
+      setIsLogged(false)
+    }
+  },[])
 
   useEffect(()=>{
       const findCourses=async()=>{
@@ -24,6 +39,7 @@ const Home = () => {
            )
         console.log(response.data.allCourse)
         setCourses(response.data.allCourse)
+        //localStorage.getItem("user",JSON.stringify(response.data.token))
           
         } catch (error) {
           console.log("error in findcourse",error)
@@ -32,6 +48,26 @@ const Home = () => {
       }
       findCourses()
   },[]);
+
+
+  async function handleLogout(){
+
+    try {
+
+      const response=await axios.get("http://localhost:3000/user/logout",{
+        withCredentials:true
+      })
+      console.log(response.data.message)
+      toast.success(response.data.message)
+      setIsLogged(false)
+      
+    } catch (error) {
+      console.log("error in logout",error)
+      toast.error(error.response.data.error || "logout error")
+      
+    }
+
+  }
 
   
   var settings = {
@@ -77,18 +113,43 @@ const Home = () => {
     <>
    <div className='h-screen container bg-gradient-to-r from-black mx-auto  to-blue-950'>
     {/* Navbar */}
-    <div className='flex justify-between py-5 px-20 items-center'>
+    
+    {
+      isLogged? <div className='flex justify-between py-5 px-20 items-center'>
 
         <div className='flex gap-3 items-center'>
           <img src={logo} className='h-10 w-10 object-cover rounded-full' alt="" />
           <h1 className='text-2xl text-orange-600'>LearnXpress</h1>
         </div>
         <div className='flex gap-3'>
+
+         <Link onClick={handleLogout}  className='text-2xl py-1 px-5 rounded border-2 border-white text-white'>logout</Link>
+    
+        </div>
+
+        </div>
+
+        :
+        
+         <div className='flex justify-between py-5 px-20 items-center'>
+
+        <div className='flex gap-3 items-center'>
+          <img src={logo} className='h-10 w-10 object-cover rounded-full' alt="" />
+          <h1 className='text-2xl text-orange-600'>LearnXpress</h1>
+        </div>
+        <div className='flex gap-3'>
+          
          <Link to={'/login'} className='text-2xl py-1 px-5 rounded border-2 border-white text-white'>login</Link>
          <Link to={'/signup'} className='text-2xl py-1 px-5 rounded  border-2 border-white text-white'>signup</Link>
+    
         </div>
 
     </div>
+
+    
+    }
+
+  
 
    {/* middle part */}
     <div className='flex justify-center items-center flex-col pt-5'>
@@ -141,16 +202,16 @@ const Home = () => {
         </div>
         <h3 className='text-white my-3'>Follow us</h3>
         <div className='flex text-white gap-2'>
-            <FaFacebook />
-            <FaGithub />
-            <FaLinkedin />
-            <IoLogoInstagram />
+            <FaFacebook className='hover:bg-blue-600 rounded-2xl' />
+            <FaGithub  />
+            <FaLinkedin className='hover:bg-blue-500 rounded-2xl' />
+            <IoLogoInstagram className='hover:bg-pink-600  rounded-2xl' />
         </div>
         </div>
 
 
         <div className='flex text-white flex-col '>
-            <h1 className='text-2xl mb-4'>connects</h1>
+            <h1 className='text-2xl mb-4'>Connects</h1>
             <h3 className='opacity-60'>github-Neeraj-chauhan12</h3>
             <h3 className='opacity-60'>leetcode-Neeraj-chauhan12</h3>
             <h3 className='opacity-60'>LinkedIn-Neeraj-chauhan12</h3>
