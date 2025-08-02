@@ -19,9 +19,10 @@ const Home = () => {
   const navigate=useNavigate()
 
   useEffect(()=>{
-    const token=localStorage.getItem("user")
+    const user=localStorage.getItem("user")
+  
 
-    if(token){
+    if(user){
       setIsLogged(true)
     }
     else{
@@ -57,8 +58,8 @@ const Home = () => {
       const response=await axios.get("http://localhost:3000/user/logout",{
         withCredentials:true
       })
-      console.log(response.data.message)
       toast.success(response.data.message)
+      localStorage.removeItem("user")
       setIsLogged(false)
       
     } catch (error) {
@@ -123,7 +124,7 @@ const Home = () => {
         </div>
         <div className='flex gap-3'>
 
-         <Link onClick={handleLogout}  className='text-2xl py-1 px-5 rounded border-2 border-white text-white'>logout</Link>
+         <Link onClick={handleLogout}  className='text-2xl py-1 px-5 rounded hover:bg-red-500  border-2 border-white text-white'>logout</Link>
     
         </div>
 
@@ -181,7 +182,7 @@ const Home = () => {
                   <img className='h-32 w-80 object-cover' src={course.image.url} alt="" />
                   <div className='flex justify-center pt-3 gap-3 items-center flex-col'>
                        <h1 className='text-3xl'>{course.title}</h1>
-                       <button className='bg-orange-600 hover:bg-green-500 py-2 px-4 rounded-full border-2 border-white'>Enroll now</button>
+                       <Link to={`/buy/${course._id}`} className='bg-orange-600 hover:bg-green-500 py-2 px-4 rounded-full border-2 border-white'>Enroll now</Link>
 
                   </div>
                

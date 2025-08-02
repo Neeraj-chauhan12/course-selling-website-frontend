@@ -7,7 +7,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 
 
@@ -15,14 +15,17 @@ const Courses = () => {
 
   const [courses,setCourses]=useState([])
   const [isLogged,setIsLogged]=useState(false);
+  const [loading,setLoading]=useState(true)
+  
+  
 
-  //const user=JSON.parse(localStorage.getItem("user"))
- // const token=user.token
+  const navigate=useNavigate();
+  
+    
 
   useEffect(()=>{
-     const token=localStorage.getItem("user")
-  
-      if(token){
+    const user=localStorage.getItem("user")
+      if(user){
         setIsLogged(true)
       }
       else{
@@ -41,7 +44,7 @@ const Courses = () => {
            )
         console.log(response.data.allCourse)
         setCourses(response.data.allCourse)
-        //localStorage.getItem("user",JSON.stringify(response.data.token))
+        setLoading(false)
           
         } catch (error) {
           console.log("error in findcourse",error)
@@ -61,7 +64,10 @@ const Courses = () => {
       })
       console.log(response.data.message)
       toast.success(response.data.message)
+      localStorage.removeItem('user')
       setIsLogged(false)
+      navigate('/')
+      
       
     } catch (error) {
       console.log("error in logout",error)
@@ -83,7 +89,9 @@ const Courses = () => {
         <Link to={'/courses'} className='flex gap-4 my-2 text-2xl'><FaDiscourse /> <span>Courses</span> </Link>
         <Link to={'/purchase'} className='flex gap-4 my-2 text-2xl'><BiSolidPurchaseTag /><span>Purchase</span> </Link>
         <Link to={'/'} className='flex gap-4 my-2 text-2xl'><IoSettings /><span>Setting</span> </Link>
-        <Link to={'/'} onClick={handleLogout} className='flex gap-4 my-2 text-2xl'><IoIosLogOut /> <span>LogOut</span></Link>
+
+        <Link  onClick={handleLogout} className='flex gap-4 my-2 text-2xl'><IoIosLogOut /> <span>LogOut</span></Link>
+      
         
       </div>
 
@@ -96,7 +104,7 @@ const Courses = () => {
         </div>
 
         <div className='course h-[85%] flex flex-wrap gap-16 overflow-y-scroll  py-5 px-10 w-full'>
-
+      
           {
             courses.map((course)=>(
               <div className='  duration-300  hover:scale-105' key={course._id}>
@@ -106,7 +114,7 @@ const Courses = () => {
                        <h1 className='text-3xl'>{course.title}</h1>
                        <h1 className='text-sm'>{course.description}</h1>
                        <h1 className='text-2xl'>{course.amount}</h1>
-                       <Link to={`/buy`} className='bg-orange-600 hover:bg-green-500 py-2 px-4 rounded-full border-2 border-white'>Buy now</Link>
+                       <Link  to={`/buy/${course._id}`} className='bg-orange-600 hover:bg-green-500 py-2 px-4 rounded-full border-2 border-white'>Buy now</Link>
 
                   </div>
                
@@ -120,8 +128,9 @@ const Courses = () => {
 
         </div>
 
-      </div>
+      
 
+    </div>
     </div>
 
     
