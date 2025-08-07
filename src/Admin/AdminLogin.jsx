@@ -6,7 +6,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 
 
-const Login = () => {
+const AdminLogin = () => {
 
   const [errorResponse,setErrorResponse]=useState("");
 
@@ -19,10 +19,7 @@ const Login = () => {
   const navigate=useNavigate();
 
  async function onsubmit(data){
-  console.log(data)
-
-  const userLogin={
-    
+  const adminLogin={  
     email:data.email,
     password:data.password
 
@@ -30,22 +27,20 @@ const Login = () => {
 
   try {
       
-     const response= await axios.post("http://localhost:3000/admin/login",userLogin,
+     const response= await axios.post("http://localhost:3000/admin/login",adminLogin,
       {
         withCredentials:true,
 
       }
      )
      console.log(response.data)
-     toast.success("login successfull")
-     localStorage.setItem("user",JSON.stringify(response.data));
-     navigate('/')
-     
-      
+     toast.success("login successfull",response.data)
+     navigate('/Admin/Dashboard')
+     localStorage.setItem("admin",JSON.stringify(response.data));  
     } catch (error) {
       if(error.response){
       setErrorResponse(error.response.data.error)
-      console.log("error in signup page",error)
+      console.log("error in login page",error)
       }
       
       
@@ -64,7 +59,7 @@ const Login = () => {
                 <h1 className='text-2xl text-orange-600'>LearnXpress</h1>
               </div>
               <div className='flex gap-3'>
-               <Link to={'/AdminSignup'} className='text-2xl py-1 px-5 rounded border-2 border-white text-white'>Signup</Link>
+               <Link to={'/Admin/Signup'} className='text-2xl py-1 px-5 rounded border-2 border-white text-white'>Signup</Link>
                <button className='text-2xl py-1 px-5 rounded bg-orange-600 border-2 border-white text-white'>Join now</button>
               </div>
       
@@ -110,7 +105,7 @@ const Login = () => {
                   </h1>)
                 }
 
-                <button className='bg-orange-600 rounded mt-4 w-full py-3 flex justify-center items-center' >submit now</button>
+                <button className='bg-orange-600 rounded mt-4 w-full py-3 flex justify-center items-center' >Login now</button>
 
         </form>
              
@@ -126,4 +121,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default AdminLogin

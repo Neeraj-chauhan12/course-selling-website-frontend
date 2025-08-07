@@ -9,8 +9,16 @@ import Purchases from './components/Purchases'
 import Courses from './components/Courses'
 import AdminSignup from './Admin/AdminSignup'
 import AdminLogin from './Admin/AdminLogin'
+import AdminDashboard from './Admin/AdminDashboard'
+import AdminCreate from './Admin/CreateCourse'
+import AdminUpdate from './Admin/UpdateCourse'
+import AdminDeleteCourse from './Admin/AdminDeleteCourse'
+
 
 const App = () => {
+
+  const user=localStorage.getItem("user");
+  const admin=localStorage.getItem("admin")
   return (
     <>
     <div>
@@ -26,9 +34,12 @@ const App = () => {
 
         {/* Admin routes */}
 
-        <Route path='/' element={<Home />} />
-        <Route path='/AdminSignup' element={<AdminSignup />} />
-        <Route path='/AdminLogin' element={<AdminLogin />} />
+        
+        <Route path='/Admin/Signup' element={<AdminSignup />} />
+        <Route path='/Admin/Login' element={<AdminLogin />} />
+        <Route path='/Admin/Dashboard' element={<AdminDashboard />} />
+        <Route path='/Admin/Create' element={<AdminCreate />} />
+        <Route path='/Admin/Update/:id' element={<AdminUpdate />} />
 
       </Routes>
       <Toaster />

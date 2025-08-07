@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-const Signup = () => {
+const AdminSignup = () => {
 
   const [errorResponse,setErrorResponse]=useState("")
 
@@ -20,22 +20,22 @@ const Signup = () => {
   async function onsubmit(data){
     console.log(data)
 
-    const userData={
-      username:data.username,
+    const adminData={
+      adminname:data.adminname,
       email:data.email,
       password:data.password
     }
  
     try {
       
-     const response= await axios.post("http://localhost:3000/admin/register",userData,
+     const response= await axios.post("http://localhost:3000/admin/register",adminData,
       {
         withCredentials:true,
 
       }
      )
-     toast.success("signup successfull")
-     navigate('/login')
+     toast.success("signup successfull",response)
+     navigate('/Admin/Login')
 
       
     } catch (error) {
@@ -61,7 +61,7 @@ const Signup = () => {
                     <h1 className='text-2xl text-orange-600'>LearnXpress</h1>
                   </div>
                   <div className='flex gap-3'>
-                   <Link to={'/AdminLogin'} className='text-2xl py-1 px-5 rounded border-2 border-white text-white'>Login</Link>
+                   <Link to={'/Admin/Login'} className='text-2xl py-1 px-5 rounded border-2 border-white text-white'>Login</Link>
                    <button className='text-2xl py-1 px-5 rounded bg-orange-600 border-2 border-white text-white'>Join now</button>
                   </div>
           
@@ -87,7 +87,7 @@ const Signup = () => {
                     className='w-full mb-5 text-2xl text-white border-2 focus:outline-none focus:ring-2 focus:ring-green-500 border-gray-600 rounded '
                    placeholder='Enter the username..' 
                    type="text"
-                   {...register('username')}
+                   {...register('adminname')}
                     />
 
                 <h1 className='text-white text-2xl mb-2'>Email</h1>
@@ -130,4 +130,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default AdminSignup
