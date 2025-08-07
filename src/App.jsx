@@ -7,7 +7,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import BuyCourse from './components/BuyCourse'
 import Purchases from './components/Purchases'
 import Courses from './components/Courses'
-
+import AdminSignup from './Admin/AdminSignup'
+import AdminLogin from './Admin/AdminLogin'
 
 const App = () => {
   return (
@@ -22,6 +23,12 @@ const App = () => {
         <Route path='/buy/:courseId' element={<BuyCourse />} />
         <Route path='/purchase' element={<Purchases />} />
         <Route path='/courses' element={<Courses />} />
+
+        {/* Admin routes */}
+
+        <Route path='/' element={<Home />} />
+        <Route path='/AdminSignup' element={<AdminSignup />} />
+        <Route path='/AdminLogin' element={<AdminLogin />} />
 
       </Routes>
       <Toaster />
