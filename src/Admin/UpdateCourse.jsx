@@ -58,9 +58,9 @@ const UpdateCourse = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("price", amount);
+    formData.append("amount", amount);
     if (image) {
-      formData.append("imageUrl", image);
+      formData.append("image", image);
     }
     const admin = JSON.parse(localStorage.getItem("admin"));
     const token = admin.token;
@@ -69,8 +69,7 @@ const UpdateCourse = () => {
       return;
     }
     try {
-      const response = await axios.put(
-        `http://localhost:3000/course/update/${id}`,
+      const response = await axios.put(`http://localhost:3000/course/update/${id}`,
         formData,
         {
           headers: {
@@ -154,7 +153,7 @@ const UpdateCourse = () => {
                     onChange={changePhotoHandler}
                     name=""/>
     
-                    <button type='submit' className='bg-orange-600 rounded mt-4  w-full py-3 flex justify-center items-center' >Create course</button>
+                    <button type='submit' className='bg-orange-600 rounded mt-4  w-full py-3 flex justify-center items-center' >Update course</button>
     
             </form>
 

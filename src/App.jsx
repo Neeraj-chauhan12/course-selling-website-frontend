@@ -12,7 +12,6 @@ import AdminLogin from './Admin/AdminLogin'
 import AdminDashboard from './Admin/AdminDashboard'
 import AdminCreate from './Admin/CreateCourse'
 import AdminUpdate from './Admin/UpdateCourse'
-import AdminDeleteCourse from './Admin/AdminDeleteCourse'
 
 
 const App = () => {
