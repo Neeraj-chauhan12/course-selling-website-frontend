@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { BACKEND_URL } from '../utils/utils';
 
 const BuyCourse = () => {
 
@@ -26,7 +27,7 @@ const BuyCourse = () => {
       try {
         setLoading(true)
         const response = await axios.post(
-          `http://localhost:3000/course/purchase/${courseId}`,
+          `${BACKEND_URL}/course/purchase/${courseId}`,
           {},
           {
             headers: {

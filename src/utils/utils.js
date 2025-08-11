@@ -1,0 +1,1 @@
+export const BACKEND_URL="https://course-selling-website-backend-3.onrender.com"

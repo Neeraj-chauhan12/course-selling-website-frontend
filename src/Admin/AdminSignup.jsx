@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { BACKEND_URL } from '../utils/utils';
 
 const AdminSignup = () => {
 
@@ -28,7 +29,7 @@ const AdminSignup = () => {
  
     try {
       
-     const response= await axios.post("http://localhost:3000/admin/register",adminData,
+     const response= await axios.post(`${BACKEND_URL}/admin/register`,adminData,
       {
         withCredentials:true,
 

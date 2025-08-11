@@ -8,6 +8,7 @@ import { CiSearch } from "react-icons/ci";
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { BACKEND_URL } from '../utils/utils';
 
 
 
@@ -37,7 +38,7 @@ const Courses = () => {
   useEffect(()=>{
       const findCourses=async()=>{
         try {
-           const response =await axios.get('http://localhost:3000/course/findCourse',
+           const response =await axios.get(`${BACKEND_URL}/course/findCourse`,
             {
               withCredentials:true
             }
@@ -59,7 +60,7 @@ const Courses = () => {
 
     try {
 
-      const response=await axios.get("http://localhost:3000/user/logout",{
+      const response=await axios.get(`${BACKEND_URL}/user/logout`,{
         withCredentials:true
       })
       console.log(response.data.message)

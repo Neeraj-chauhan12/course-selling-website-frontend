@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import logo from '../../public/profile.jpg'
+import { BACKEND_URL } from '../utils/utils'
 
 const AdminDashboard = () => {
    
@@ -23,7 +24,7 @@ const AdminDashboard = () => {
   useEffect(()=>{
       const findCourses=async()=>{
         try {
-           const response =await axios.get('http://localhost:3000/course/findCourse',
+           const response =await axios.get(`${BACKEND_URL}/course/findCourse`,
             {
               withCredentials:true
             }
@@ -44,7 +45,7 @@ const AdminDashboard = () => {
     // delete courses code
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3000/course/delete/${id}`,
+      const response = await axios.delete(`${BACKEND_URL}/course/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -67,7 +68,7 @@ const AdminDashboard = () => {
 
     try {
 
-      const response=await axios.get("http://localhost:3000/admin/logout",{
+      const response=await axios.get(`${BACKEND_URL}/admin/logout`,{
         withCredentials:true
       })
       console.log(response.data.message)

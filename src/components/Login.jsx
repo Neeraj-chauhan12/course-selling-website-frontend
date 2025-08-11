@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { BACKEND_URL } from '../utils/utils';
 
 
 const Login = () => {
@@ -30,7 +31,7 @@ const Login = () => {
 
   try {
       
-     const response= await axios.post("http://localhost:3000/user/login",userLogin,
+     const response= await axios.post(`${BACKEND_URL}/user/login`,userLogin,
       {
         withCredentials:true,
 

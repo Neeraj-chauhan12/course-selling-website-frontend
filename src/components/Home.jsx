@@ -10,6 +10,7 @@ import Slider from "react-slick";
  import "slick-carousel/slick/slick-theme.css";
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { BACKEND_URL } from '../utils/utils';
 
 const Home = () => {
 
@@ -33,7 +34,7 @@ const Home = () => {
   useEffect(()=>{
       const findCourses=async()=>{
         try {
-           const response =await axios.get('http://localhost:3000/course/findCourse',
+           const response =await axios.get(`${BACKEND_URL}/course/findCourse`,
             {
               withCredentials:true
             }
@@ -55,7 +56,7 @@ const Home = () => {
 
     try {
 
-      const response=await axios.get("http://localhost:3000/user/logout",{
+      const response=await axios.get(`${BACKEND_URL}/user/logout`,{
         withCredentials:true
       })
       toast.success(response.data.message)

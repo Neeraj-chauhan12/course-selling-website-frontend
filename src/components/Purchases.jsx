@@ -7,6 +7,7 @@ import { FaDiscourse } from 'react-icons/fa'
 import { IoIosLogOut } from 'react-icons/io'
 import { IoHome, IoSettings } from 'react-icons/io5'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { BACKEND_URL } from '../utils/utils'
 
 const Purchases = () => {
   
@@ -38,7 +39,7 @@ const Purchases = () => {
      useEffect(()=>{
       const findCourses=async()=>{
         try {
-           const response =await axios.get(`http://localhost:3000/user/purchase`,
+           const response =await axios.get(`${BACKEND_URL}/user/purchase`,
             {
               headers: {
             Authorization: `Bearer ${token}`,
@@ -62,7 +63,7 @@ const Purchases = () => {
 
     try {
 
-      const response=await axios.get("http://localhost:3000/user/logout",{
+      const response=await axios.get(`${BACKEND_URL}/user/logout`,{
         withCredentials:true
       })
       console.log(response.data.message)
